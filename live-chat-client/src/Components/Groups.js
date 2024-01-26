@@ -1,47 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./myStyles.css";
-import SearchIcon from "@mui/icons-material/Search";
-import { IconButton } from "@mui/material";
-import logo from "../Images/live-chat_512px.png";
-import { useDispatch, useSelector } from "react-redux";
-import { AnimatePresence, motion } from "framer-motion";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { refreshSidebarFun } from "../Features/refreshSidebar";
-import { myContext } from "./MainContainer";
+import React, { useContext, useEffect, useState } from "react"
+import "./myStyles.css"
+import SearchIcon from "@mui/icons-material/Search"
+import { IconButton } from "@mui/material"
+import logo from "../Images/live-chat_512px.png"
+import { useDispatch, useSelector } from "react-redux"
+import { AnimatePresence, motion } from "framer-motion"
+import RefreshIcon from "@mui/icons-material/Refresh"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { refreshSidebarFun } from "../Features/refreshSidebar"
+import { myContext } from "./MainContainer"
 
 function Groups() {
   // const [refresh, setRefresh] = useState(true);
-  const { refresh, setRefresh } = useContext(myContext);
+  const { refresh, setRefresh } = useContext(myContext)
 
-  const lightTheme = useSelector((state) => state.themeKey);
-  const dispatch = useDispatch();
-  const [groups, SetGroups] = useState([]);
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const lightTheme = useSelector((state) => state.themeKey)
+  const dispatch = useDispatch()
+  const [groups, SetGroups] = useState([])
+  const userData = JSON.parse(localStorage.getItem("userData"))
   // console.log("Data from LocalStorage : ", userData);
-  const nav = useNavigate();
+  const nav = useNavigate()
   if (!userData) {
-    console.log("User not Authenticated");
-    nav("/");
+    console.log("User not Authenticated")
+    nav("/")
   }
 
-  const user = userData.data;
+  const user = userData.data
   useEffect(() => {
-    console.log("Users refreshed : ", user.token);
+    console.log("Users refreshed : ", user.token)
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
-    };
+    }
 
     axios
-      .get("http://localhost:8080/chat/fetchGroups", config)
+      .get("https://livechatapp-edyc.onrender.com/chat/fetchGroups", config)
       .then((response) => {
-        console.log("Group Data from API ", response.data);
-        SetGroups(response.data);
-      });
-  }, [refresh]);
+        console.log("Group Data from API ", response.data)
+        SetGroups(response.data)
+      })
+  }, [refresh])
 
   return (
     <AnimatePresence>
@@ -66,7 +66,7 @@ function Groups() {
           <IconButton
             className={"icon" + (lightTheme ? "" : " dark")}
             onClick={() => {
-              setRefresh(!refresh);
+              setRefresh(!refresh)
             }}
           >
             <RefreshIcon />
@@ -90,7 +90,7 @@ function Groups() {
                 className={"list-tem" + (lightTheme ? "" : " dark")}
                 key={index}
                 onClick={() => {
-                  console.log("Creating chat with group", group.name);
+                  console.log("Creating chat with group", group.name)
                   // const config = {
                   //   headers: {
                   //     Authorization: `Bearer ${userData.data.token}`,
@@ -103,7 +103,7 @@ function Groups() {
                   //   },
                   //   config
                   // );
-                  dispatch(refreshSidebarFun());
+                  dispatch(refreshSidebarFun())
                 }}
               >
                 <p className={"con-icon" + (lightTheme ? "" : " dark")}>T</p>
@@ -111,12 +111,12 @@ function Groups() {
                   {group.chatName}
                 </p>
               </motion.div>
-            );
+            )
           })}
         </div>
       </motion.div>
     </AnimatePresence>
-  );
+  )
 }
 
-export default Groups;
+export default Groups

@@ -1,89 +1,89 @@
-import React, { useState } from "react";
-import logo from "../Images/live-chat_512px.png";
-import { Backdrop, Button, CircularProgress, TextField } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Toaster from "./Toaster";
+import React, { useState } from "react"
+import logo from "../Images/live-chat_512px.png"
+import { Backdrop, Button, CircularProgress, TextField } from "@mui/material"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import Toaster from "./Toaster"
 
 function Login() {
-  const [showlogin, setShowLogin] = useState(false);
-  const [data, setData] = useState({ name: "", email: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  const [showlogin, setShowLogin] = useState(false)
+  const [data, setData] = useState({ name: "", email: "", password: "" })
+  const [loading, setLoading] = useState(false)
 
-  const [logInStatus, setLogInStatus] = React.useState("");
-  const [signInStatus, setSignInStatus] = React.useState("");
+  const [logInStatus, setLogInStatus] = React.useState("")
+  const [signInStatus, setSignInStatus] = React.useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const changeHandler = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
 
   const loginHandler = async (e) => {
-    setLoading(true);
-    console.log(data);
+    setLoading(true)
+    console.log(data)
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
-      };
+      }
 
       const response = await axios.post(
-        "http://localhost:8080/user/login/",
+        "https://livechatapp-edyc.onrender.com/user/login/",
         data,
         config
-      );
-      console.log("Login : ", response);
-      setLogInStatus({ msg: "Success", key: Math.random() });
-      setLoading(false);
-      localStorage.setItem("userData", JSON.stringify(response));
-      navigate("/app/welcome");
+      )
+      console.log("Login : ", response)
+      setLogInStatus({ msg: "Success", key: Math.random() })
+      setLoading(false)
+      localStorage.setItem("userData", JSON.stringify(response))
+      navigate("/app/welcome")
     } catch (error) {
       setLogInStatus({
         msg: "Invalid User name or Password",
         key: Math.random(),
-      });
+      })
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   const signUpHandler = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
-      };
+      }
 
       const response = await axios.post(
-        "http://localhost:8080/user/register/",
+        "https://livechatapp-edyc.onrender.com/user/register/",
         data,
         config
-      );
-      console.log(response);
-      setSignInStatus({ msg: "Success", key: Math.random() });
-      navigate("/app/welcome");
-      localStorage.setItem("userData", JSON.stringify(response));
-      setLoading(false);
+      )
+      console.log(response)
+      setSignInStatus({ msg: "Success", key: Math.random() })
+      navigate("/app/welcome")
+      localStorage.setItem("userData", JSON.stringify(response))
+      setLoading(false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
       if (error.response.status === 405) {
         setLogInStatus({
           msg: "User with this email ID already Exists",
           key: Math.random(),
-        });
+        })
       }
       if (error.response.status === 406) {
         setLogInStatus({
           msg: "User Name already Taken, Please take another one",
           key: Math.random(),
-        });
+        })
       }
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -110,7 +110,7 @@ function Login() {
               onKeyDown={(event) => {
                 if (event.code == "Enter") {
                   // console.log(event);
-                  loginHandler();
+                  loginHandler()
                 }
               }}
             />
@@ -125,7 +125,7 @@ function Login() {
               onKeyDown={(event) => {
                 if (event.code == "Enter") {
                   // console.log(event);
-                  loginHandler();
+                  loginHandler()
                 }
               }}
             />
@@ -142,7 +142,7 @@ function Login() {
               <span
                 className="hyper"
                 onClick={() => {
-                  setShowLogin(false);
+                  setShowLogin(false)
                 }}
               >
                 Sign Up
@@ -167,7 +167,7 @@ function Login() {
               onKeyDown={(event) => {
                 if (event.code == "Enter") {
                   // console.log(event);
-                  signUpHandler();
+                  signUpHandler()
                 }
               }}
             />
@@ -181,7 +181,7 @@ function Login() {
               onKeyDown={(event) => {
                 if (event.code == "Enter") {
                   // console.log(event);
-                  signUpHandler();
+                  signUpHandler()
                 }
               }}
             />
@@ -196,7 +196,7 @@ function Login() {
               onKeyDown={(event) => {
                 if (event.code == "Enter") {
                   // console.log(event);
-                  signUpHandler();
+                  signUpHandler()
                 }
               }}
             />
@@ -212,7 +212,7 @@ function Login() {
               <span
                 className="hyper"
                 onClick={() => {
-                  setShowLogin(true);
+                  setShowLogin(true)
                 }}
               >
                 Log in
@@ -225,7 +225,7 @@ function Login() {
         )}
       </div>
     </>
-  );
+  )
 }
 
-export default Login;
+export default Login
