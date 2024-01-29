@@ -24,10 +24,14 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
     return res.sendStatus(400)
   }
 
+  const chat = await Chat.find({ chat: chatId })
+  const receiverId = chat.users[1]
+
   var newMessage = {
     sender: req.user._id,
     content: content,
     chat: chatId,
+    reciever: receiverId,
   }
 
   try {
