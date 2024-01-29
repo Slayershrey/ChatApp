@@ -1,14 +1,14 @@
-import React, { createContext, useState } from "react";
-import "./myStyles.css";
-import Sidebar from "./Sidebar";
-import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { createContext, useState } from "react"
+import "./myStyles.css"
+import Sidebar from "./Sidebar"
+import { Outlet } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 
-export const myContext = createContext();
+export const myContext = createContext()
 function MainContainer() {
-  const dispatch = useDispatch();
-  const lightTheme = useSelector((state) => state.themeKey);
-  const [refresh, setRefresh] = useState(true);
+  const dispatch = useDispatch()
+  const lightTheme = useSelector((state) => state.themeKey)
+  const [refresh, setRefresh] = useState(true)
 
   return (
     <div className={"main-container" + (lightTheme ? "" : " dark")}>
@@ -22,7 +22,7 @@ function MainContainer() {
       {/* <Users /> */}
       {/* <Groups /> */}
     </div>
-  );
+  )
 }
 
-export default MainContainer;
+export default MainContainer
